@@ -13,6 +13,7 @@ export default function Home() {
   const [session,setSession] = useState()
   useEffect(()=>async()=>{
     const {data,error} = await supabase.auth.getSession()
+    console.log('data: ', data);
     if(data){
       setSession(data.session)
     }
