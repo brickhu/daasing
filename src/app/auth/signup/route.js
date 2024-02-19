@@ -10,7 +10,6 @@ export async function POST(request) {
   const cookieStore = cookies()
   const supabase = createRouteHandlerClient({ cookies: () => cookieStore })
 
-  console.log('callback链接：',requestUrl.origin)
 
   await supabase.auth.signUp({
     email,

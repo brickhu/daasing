@@ -1,7 +1,9 @@
-export default function Login() {
+export default function Login(req) {
+  console.log(req)
+  const {searchParams:{from}} = req
   return (
     <div>
-      <form action="/auth/login" method="post">
+      <form action={"/auth/login?from="+from} method="post">
         <label htmlFor="email">Email</label>
         <input name="email" /> 
         <hr/>

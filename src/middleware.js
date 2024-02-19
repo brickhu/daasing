@@ -1,14 +1,20 @@
 import { createMiddlewareClient } from '@supabase/auth-helpers-nextjs'
 import { NextResponse } from 'next/server'
+import { createContext } from 'react'
 
 export async function middleware(req) {
+  
   const res = NextResponse.next()
   // Create a Supabase client configured to use cookies
   const supabase = createMiddlewareClient({ req, res })
 
   // Refresh session if expired - required for Server Components
-  const session = await supabase.auth.getSession()
-  console.log('执行中间件',session)
+  const {data:{user},error} = await supabase.auth.getUser()
+  if(!user) {
+    const redirectUrl = new URL('/login', req.url)
+    redirectUrl.searchParams.set('from',req.url)
+    return NextResponse.redirect(redirectUrl)
+  }
   return res
 }
 
@@ -22,6 +28,8 @@ export const config = {
      * - favicon.ico (favicon file)
      * Feel free to modify this pattern to include more paths.
      */
-    '/((?!_next/static|_next/image|favicon.ico).*)',
+    // '/((?!_next/static|_next/image|favicon.ico|login).*)'
+    '/dashboard/:path',
+    '/account/:path'
   ],
 }
