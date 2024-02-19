@@ -12,10 +12,10 @@ const supabase = createClientComponentClient()
 export default function Home() {
   const [session,setSession] = useState()
   useEffect(()=>async()=>{
-    const {data,error} = await supabase.auth.getSession()
+    const {data,error} = await supabase.auth.getUser()
     console.log('data: ', data);
     if(data){
-      setSession(data.session)
+      setSession(data.user)
     }
   },[])
   return (
