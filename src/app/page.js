@@ -20,7 +20,7 @@ export default function Home() {
   },[])
   return (
     <div>
-      {session?<div>{session.user.email}</div>:<div>not login</div>}
+      {session?<div>已登录</div>:<div>没有登录</div>}
     </div>
   )
 }
