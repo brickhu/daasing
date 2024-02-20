@@ -3,27 +3,36 @@
 
 import { createClientComponentClient } from '@supabase/auth-helpers-nextjs'
 import { Button } from "@/components/ui/button";
-import { useState } from 'react';
+import { useState,useEffect } from 'react';
+import {useRouter} from 'next/navigation';
 
-export default function OAuth() {
+export default function OAuth({href}) {
 
   
-  const [loading,setLoading] = useState(true)
+  const [loading,setLoading] = useState(false)
+  const [origin,setOrigin] = useState()
 
+  useEffect(() => {
+    setOrigin(window.location.origin)
+  }, []);
 
 
   async function handleLoginWithOAth() {
+    
     const supabase = createClientComponentClient()
-    await supabase.auth.signInWithOAuth({
+    const {error}=await supabase.auth.signInWithOAuth({
       provider: 'github',
       options: {
-        redirectTo:"http://localhost:3000/auth/callback"
+        redirectTo:origin+"/auth/callback"
       }
     })
-    console.log('登录完成')
+    setLoading(true)
+    if(error){
+      setLoading(false)
+    }
   }
 
-  return <Button onClick={handleLoginWithOAth}>Login with github</Button>
+  return <Button onClick={handleLoginWithOAth} disabled={loading}>Login with github</Button>
 }
 
 
