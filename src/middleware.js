@@ -30,6 +30,7 @@ export const config = {
      */
     // '/((?!_next/static|_next/image|favicon.ico|login).*)'
     '/dashboard/:path',
-    '/account/:path'
+    '/account/:path',
+    '/notes/new/:path'
   ],
 }

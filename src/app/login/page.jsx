@@ -12,8 +12,6 @@ export default function Login(req) {
         <hr/>
         <button>登录</button>
         <hr/>
-        <button formAction="/auth/signup">注册</button>
-        <hr/>
         <button formAction="/auth/logout">退出</button>
         
       </form>

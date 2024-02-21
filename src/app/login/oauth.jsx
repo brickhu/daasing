@@ -32,7 +32,7 @@ export default function OAuth({href}) {
     }
   }
 
-  return <Button onClick={handleLoginWithOAth} disabled={loading}>Login with github</Button>
+  return <Button onClick={handleLoginWithOAth} disabled={loading}>{loading?"Logining...":"Login with github"}</Button>
 }
 
 
