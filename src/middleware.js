@@ -9,8 +9,8 @@ export async function middleware(req) {
   const supabase = createMiddlewareClient({ req, res })
 
   // Refresh session if expired - required for Server Components
-  const {data:{user},error} = await supabase.auth.getUser()
-  if(!user) {
+  const {data:{session},error} = await supabase.auth.getSession()
+  if(!session) {
     const redirectUrl = new URL('/login', req.url)
     redirectUrl.searchParams.set('from',req.url)
     return NextResponse.redirect(redirectUrl)

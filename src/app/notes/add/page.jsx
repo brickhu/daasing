@@ -1,28 +1,48 @@
 'use client'
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
-import { useFormStatus } from 'react-dom'
+import { useEffect, useState } from "react"
+// import { createClientComponentClient } from "@supabase/auth-helpers-nextjs"
+import { supabase } from "@/lib/supabase-clientside"
 
 
 
 export default function Add() {
-  const { pending,data, method, action } = useFormStatus()
+  const [submiting,setSubmiting] = useState(false)
+  const [session,setSession] = useState()
+
+  useEffect(()=>async()=>{
+    const {data,error} = await supabase.auth.getSession()
+    setSession(error?null:data.session)
+  },[])
+
+
+
+   async function CreateNote({formData}){
+    let response = await fetch('/api/note/add', {
+      method: 'POST',
+      body: formData,
+    })
+    const result = await response.json()
+    return result
+   }
 
   return (
     <div>
-      <form action={async(formData)=>{
-        console.log(pending)
-        let response = await fetch('/api/note/add', {
-          method: 'POST',
-          body: formData,
+      <form action={(formData)=>{
+        setSubmiting(true)
+        CreateNote({formData}).then(res=>{
+          console.log(res)
+          setSubmiting(false)
         })
-        const data = await response.json()
-        console.log(data,pending)
       }}>
         <div className="my-8"><Input type="text" placeholder="title" name="title" /></div>
-        <div className="my-8"><Button >submit</Button></div>
+        {session?
+        <div className="my-8"><Button disabled={submiting} type="submit">{submiting?'submiting...':'submit'}</Button></div>:
+        <div className="my-8"><Button >登录后添加</Button></div>
+        }
+        
       </form>
-    
     </div>
     
   )
