@@ -18,12 +18,10 @@ export default async function RootLayout({ children }) {
   const {
     data: { session },
   } = await supabase.auth.getSession();
-
   return (
     <html lang="en">
       <body className={inter.className}>
-      {children}
-        {/* <AuthProvider accessToken={session?.access_token}>{children}</AuthProvider> */}
+        <AuthProvider accessToken={session?.access_token}>{children}</AuthProvider>
       </body>
     </html>
   );

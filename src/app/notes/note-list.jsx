@@ -3,12 +3,13 @@
 import {Button} from "@/components/ui/button"
 import { useCallback, useEffect, useState } from "react"
 
-export const dynamic = "force-dynamic"
-
+import { AuthContext } from '@/components/auth-provider' 
+import {useContext} from "react"
 
 
 export default function NotesList(){
-
+  const context = useContext(AuthContext)
+  console.log('context: ', context);
   const [notes,setNotes] = useState()
   const [loading,setLoading] = useState(true)
 
