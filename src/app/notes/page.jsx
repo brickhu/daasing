@@ -16,8 +16,7 @@ export default function Notes(){
 
   async function fetchNotes({cache}){
     const response = await fetch('/api/note/get',{
-      method:"GET",
-      cache:cache==="undefined"?"no-store":cache
+      method:"GET"
     })
     const {data,error} = await response.json()
     if(error){
