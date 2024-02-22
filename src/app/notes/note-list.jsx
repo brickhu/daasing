@@ -32,7 +32,7 @@ export default function NotesList(){
     <div>
       {loading?<div>Loading notes...</div>:
         <div>
-          {notes.map(item=><div key={item.id}>{item.title}</div>)}
+          {notes?.map(item=><div key={item.id}>{item.title}</div>)}
         </div>
       }
     </div>
