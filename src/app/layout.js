@@ -22,9 +22,8 @@ export default async function RootLayout({ children }) {
   return (
     <html lang="en">
       <body className={inter.className}>
-        {/*...*/}
-        <AuthProvider accessToken={session?.access_token}>{children}</AuthProvider>
-        {/*...*/}
+      {children}
+        {/* <AuthProvider accessToken={session?.access_token}>{children}</AuthProvider> */}
       </body>
     </html>
   );
