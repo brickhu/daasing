@@ -1,18 +1,40 @@
-import { createServerComponentClient } from "@supabase/auth-helpers-nextjs"
-import { cookies } from 'next/headers'
 
-export default async function NodeList(){
-  const cookieStore = cookies()
-  const supabase = createServerComponentClient({ cookies: () => cookieStore })
-  const { data:notes, error } = await supabase
-    .from('notes')
-    .select('*')
+'use client'
+import {Button} from "@/components/ui/button"
+import { useEffect, useState } from "react"
 
-  if(error){
-    throw new Error(error)
-  }
 
-  return (
-    <div>{notes&&notes.map(item=><div key={item.id}>{item.title}</div>)}</div>
+
+
+
+export default function NotesList(){
+
+  const [notes,setNotes] = useState()
+  const [loading,setLoading] = useState(true)
+
+  useEffect(() => async () => {
+    const response = await fetch('/api/note/get',{
+      method:"GET"
+    })
+    const {data,error} = await response.json()
+    if(error){
+      console.log(error)
+    }
+    if(data){
+      console.log('data: ', data);
+      setNotes(data)
+    }
+    setLoading(false)
+  },[])
+
+
+  return(
+    <div>
+      {loading?<div>Loading notes...</div>:
+        <div>
+          {notes.map(item=><div key={item.id}>{item.title}</div>)}
+        </div>
+      }
+    </div>
   )
 }

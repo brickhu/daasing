@@ -4,10 +4,9 @@ import Main from './main'
 
 
 export default async function Home() {
-  const {session} = await getSession()
   return (
     <div>
-      <Main session={session}></Main>
+      <Main></Main>
     </div>
   )
 }
