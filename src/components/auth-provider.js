@@ -14,6 +14,7 @@ const AuthProvider = ({ accessToken, children }) => {
     const {
       data: { subscription: authListener },
     } = supabase.auth.onAuthStateChange((event, session) => {
+      console.log('event: ', event);
       if (session?.access_token !== accessToken) {
         router.refresh();
       }
