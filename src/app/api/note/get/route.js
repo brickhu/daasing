@@ -3,6 +3,7 @@ import { cookies } from 'next/headers'
 import { NextResponse } from 'next/server'
 
 export async function GET(request, context) {
+  'use server'
   try {
     cookies().getAll()
     const supabase = createRouteHandlerClient({cookies})
