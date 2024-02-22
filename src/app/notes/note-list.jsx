@@ -3,7 +3,7 @@
 import {Button} from "@/components/ui/button"
 import { useCallback, useEffect, useState } from "react"
 
-
+export const dynamic = "force-dynamic"
 
 
 
