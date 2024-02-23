@@ -1,7 +1,16 @@
 
 import { Button } from "@/components/ui/button"
-export default function Signup(req) {
+import { useSession } from "@/lib/supabase-serverside"
+import { redirect } from 'next/navigation'
+
+export default async function Signup(req) {
+  const {session,error} = await useSession()
   const {searchParams:{from}} = req
+  if(session) {
+    redirect('/account')
+    return
+  }
+  
   return (
     <div>
       <div className="w-full">
